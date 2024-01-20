@@ -3,7 +3,6 @@ import { Catalog } from '../pages/Catalog';
 import { Favorites } from '../pages/Favorites';
 import { HomePage } from '../pages/HomePage';
 import { Header } from './Header';
-import { NotFound } from '../pages/NotFound';
 
 function App() {
   return (
@@ -13,7 +12,7 @@ function App() {
         <Route index element={<HomePage />} />
         <Route path="/catalog" element={<Catalog />} />
         <Route path="/favorites" element={<Favorites />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<HomePage />} />
       </Routes>
     </>
   );

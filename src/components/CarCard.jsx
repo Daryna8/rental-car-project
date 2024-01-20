@@ -1,11 +1,25 @@
 import { styled } from 'styled-components';
-import carCardImg from '../img/carcard.png';
+import { Modal } from './Modal';
+import { useState } from 'react';
+import heartImg from '../img/svg/heart.svg';
 
-export const CarCard = ({ car: { year, make, model, rentalPrice } }) => {
+export const CarCard = ({ car }) => {
+  const { year, make, model, rentalPrice, img } = car;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleLearnMoreClick = () => {
+    setIsModalOpen(true);
+  };
+
   return (
     <div>
       <StyledCarCard>
-        <Image src={carCardImg} alt="car image" />
+        <StyledImgContainer>
+          <StyledHeartBtn>
+            <img alt="heart btn" src={heartImg}></img>
+          </StyledHeartBtn>
+          <Image src={img} alt="car image" />
+        </StyledImgContainer>
         <div>
           <StyledCarName>
             <div>
@@ -17,8 +31,13 @@ export const CarCard = ({ car: { year, make, model, rentalPrice } }) => {
             Kiev | Ukraine | Luxury Car Rentals | Premium Suv | Enclave | 9582 |
             Power liftgate
           </StyledCarInfo>
-          <StyledButton type="button">Learn more</StyledButton>
+          <StyledButton type="button" onClick={handleLearnMoreClick}>
+            Learn more
+          </StyledButton>
         </div>
+        {isModalOpen && (
+          <Modal car={car} closeModal={() => setIsModalOpen(false)} />
+        )}
       </StyledCarCard>
     </div>
   );
@@ -31,14 +50,27 @@ const StyledCarCard = styled.li`
   flex-direction: column;
   align-items: flex-start;
   gap: 28px;
-  flex-shrink: 0;
+  margin-bottom: 44px;
+`;
+
+const StyledImgContainer = styled.div`
+  position: relative;
+`;
+
+const StyledHeartBtn = styled.button`
+  background-color: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  top: 14px;
+  right: 14px;
 `;
 
 const Image = styled.img`
   width: 274px;
   height: 268px;
   border-radius: 14px;
-  margin-bottom: 14px;
 `;
 
 const StyledCarName = styled.h2`
@@ -68,10 +100,16 @@ const StyledButton = styled.button`
   height: 44px;
   justify-content: center;
   align-items: center;
+  border: none;
+
   border-radius: 12px;
   background: #3470ff;
   color: var(--White, #fff);
   font-size: 14px;
   font-weight: 600;
   line-height: 1.4;
+  cursor: pointer;
+  &:hover {
+    background: #0b44cd;
+  }
 `;

@@ -20,8 +20,13 @@ export const Header = () => {
 const StyledHeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  height: 68px;
-  background-color: #0b44cd;
+  height: 72px;
+  background: linear-gradient(
+    167deg,
+    #229fbe 0%,
+    #4066db 61.46%,
+    #130797 90.54%
+  );
 `;
 
 const StyledHomeNav = styled.div`
