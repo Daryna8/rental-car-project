@@ -26,6 +26,7 @@ export const SearchBar = () => {
               placeholder="Enter the text"
               value={selectedBrand}
               onChange={handleBrandChange}
+              width={224}
               styles={customStyles}
               components={{
                 IndicatorSeparator: () => null,
@@ -42,6 +43,7 @@ export const SearchBar = () => {
               placeholder="To $"
               value={selectedPrice}
               onChange={handlePriceChange}
+              width={125}
               styles={customStyles}
               components={{
                 IndicatorSeparator: () => null,
@@ -55,8 +57,8 @@ export const SearchBar = () => {
           <StyledSelectContainer>
             <p>Сar mileage / km</p>
             <StyledTextField>
-              <input id="from" label="From" />
-              <input id="to" label="To" />
+              <input id="from" placeholder="From" />
+              <input id="to" placeholder="To" />
             </StyledTextField>
           </StyledSelectContainer>
         </StyledSelectsCont>
@@ -96,16 +98,20 @@ const priceOptions = Array.from({ length: 49 }, (_, index) => 20 + index * 10);
 const customStyles = {
   control: (provided, state) => ({
     ...provided,
-    // width: 224,
+    width: state.selectProps.width,
     height: 48,
     border: 'none',
     borderRadius: '10px',
     background: '#F7F7FB',
-    boxShadow: state.isFocused ? '0 0 0 1px black' : 'none',
   }),
   placeholder: (provided) => ({
     ...provided,
-    color: 'black',
+    color: '#121417',
+    fontFamily: 'Manrope',
+    fontSize: '18px',
+    fontStyle: 'normal',
+    fontWeight: 500,
+    lineHeight: '20px',
   }),
   singleValue: (provided) => ({
     ...provided,
@@ -155,7 +161,6 @@ const StyledForm = styled.form`
 
 const StyledSelectsCont = styled.div`
   display: flex;
-  width: 705px;
   gap: 18px;
 `;
 
@@ -172,7 +177,32 @@ const StyledSelectContainer = styled.div`
 
 const StyledTextField = styled.div`
   display: flex;
-  width: 160px;
+  input {
+    width: 160px;
+    height: 48px;
+    border: none;
+    background: #f7f7fb;
+    padding-left: 24px;
+
+    &:first-child {
+      border-radius: 14px 0 0 14px;
+      border-right: 1px solid rgba(138, 138, 137, 0.2);
+    }
+
+    &:last-child {
+      border-radius: 0 14px 14px 0;
+    }
+
+    &::placeholder {
+      color: #121417;
+      font-family: Manrope;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 20px;
+      // TODO: maybe configure fonts separately as in the previous homework
+    }
+  }
 `;
 
 const StyledFormBtn = styled.button`

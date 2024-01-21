@@ -16,7 +16,7 @@ const rentalSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchCarsThunk.fulfilled, (state, { payload }) => {
-        state.cars.items = payload;
+        state.cars.items = [...state.cars.items, ...payload];
         state.loading = false;
       })
       .addCase(fetchCarsThunk.pending, (state) => {

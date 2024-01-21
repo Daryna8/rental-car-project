@@ -71,6 +71,7 @@ const Image = styled.img`
   width: 274px;
   height: 268px;
   border-radius: 14px;
+  object-fit: cover;
 `;
 
 const StyledCarName = styled.h2`

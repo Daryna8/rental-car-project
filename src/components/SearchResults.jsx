@@ -1,31 +1,21 @@
 import { styled } from 'styled-components';
 import { CarCard } from './CarCard';
-import { useState } from 'react';
 
-export const SearchResults = ({ cars }) => {
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const handleLoadMore = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
-  };
-
-  const itemsPerPage = 12;
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const displayedCars = cars.slice(startIndex, endIndex);
-
+export const SearchResults = ({ cars, handleLoadMore, isLastPage }) => {
   return (
     <div>
       <StyledSearchResultsContainer>
         <ul>
-          {displayedCars.map((car) => (
+          {cars.map((car) => (
             <CarCard key={car.id} car={car} />
           ))}
         </ul>
       </StyledSearchResultsContainer>
-      <StyledBtn type="button" onClick={handleLoadMore}>
-        Load more
-      </StyledBtn>
+      {!isLastPage && (
+        <StyledBtn type="button" onClick={handleLoadMore}>
+          Load more
+        </StyledBtn>
+      )}
     </div>
   );
 };

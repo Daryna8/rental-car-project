@@ -29,7 +29,7 @@ export const Modal = ({
   }, [closeModal]);
 
   return (
-    <StyledBackdrop>
+    <StyledBackdrop onClick={closeModal}>
       <StyledCarCardModal>
         <StyledCloseBtn onClick={closeModal}>
           <img alt="close btn" src={closeImg}></img>
@@ -55,7 +55,9 @@ export const Modal = ({
             </StyledCarInfoModal>
             <StyledSubTitle>Rental Conditions: </StyledSubTitle>
             <StyledConditions>{rentalConditions}</StyledConditions>
-            <StyledModalButton type="button">Rental car</StyledModalButton>
+            <StyledModalButton as="a" href="tel:+380730000000">
+              Rental car
+            </StyledModalButton>
           </div>
         </div>
       </StyledCarCardModal>
