@@ -107,10 +107,7 @@ const customStyles = {
   placeholder: (provided) => ({
     ...provided,
     color: '#121417',
-    fontFamily: 'Manrope',
     fontSize: '18px',
-    fontStyle: 'normal',
-    fontWeight: 500,
     lineHeight: '20px',
   }),
   singleValue: (provided) => ({
@@ -128,23 +125,6 @@ const customStyles = {
     ...provided,
     color: 'black',
   }),
-  // menuList: (base) => ({
-  //   ...base,
-  //   height: '100%',
-
-  //   '::-webkit-scrollbar': {
-  //     width: '8px',
-  //   },
-  //   '::-webkit-scrollbar-track': {
-  //     background: 'inset 0 0 2px rgba(0, 0, 0, 0.2)',
-  //   },
-  //   '::-webkit-scrollbar-thumb': {
-  //     background: ' var(--transparency-20)',
-  //   },
-  //   '::-webkit-scrollbar-thumb:hover': {
-  //     background: ' var(--transparency-20)',
-  //   },
-  // }),
 };
 
 const StyledFormContainer = styled.div`
@@ -157,6 +137,9 @@ const StyledForm = styled.form`
   justify-content: space-between;
   width: 859px;
   margin-bottom: 50px;
+  @media only screen and (max-width: 880px) {
+    max-width: 600px;
+  }
 `;
 
 const StyledSelectsCont = styled.div`
@@ -183,6 +166,9 @@ const StyledTextField = styled.div`
     border: none;
     background: #f7f7fb;
     padding-left: 24px;
+    @media only screen and (max-width: 880px) {
+      max-width: 120px;
+    }
 
     &:first-child {
       border-radius: 14px 0 0 14px;
@@ -195,12 +181,8 @@ const StyledTextField = styled.div`
 
     &::placeholder {
       color: #121417;
-      font-family: Manrope;
       font-size: 18px;
-      font-style: normal;
-      font-weight: 500;
-      line-height: 20px;
-      // TODO: maybe configure fonts separately as in the previous homework
+      line-height: 1.1;
     }
   }
 `;

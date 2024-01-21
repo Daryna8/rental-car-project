@@ -1,18 +1,19 @@
-import { styled } from 'styled-components';
 import { SearchBar } from '../components/SearchBar';
 import { SearchResults } from '../components/SearchResults';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { fetchCarsThunk } from '../redux/operations';
-import { selectCars } from '../redux/selectors';
+import { selectCars, selectLastCount } from '../redux/selectors';
+import { StyledCatalogContainer } from '../styles/styled';
 
 export const Catalog = () => {
   const [, setCurrentPage] = useState(1);
   const cars = useSelector(selectCars);
+  const lastCount = useSelector(selectLastCount);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchCarsThunk({}));
-  }, [dispatch]);
+    !cars.length && dispatch(fetchCarsThunk({}));
+  }, [dispatch, cars]);
 
   const handleLoadMore = () => {
     setCurrentPage((prevPage) => {
@@ -22,20 +23,16 @@ export const Catalog = () => {
     });
   };
 
-  // const isLastPage =
+  const isLastPage = lastCount < 12;
 
   return (
     <StyledCatalogContainer>
-      <SearchBar />
+      <SearchBar cars={cars} />
       <SearchResults
         cars={cars}
         handleLoadMore={handleLoadMore}
-        // isLastPage={isLastPage}
+        isLastPage={isLastPage}
       />
     </StyledCatalogContainer>
   );
 };
-
-const StyledCatalogContainer = styled.div`
-  margin: 50px 115px;
-`;

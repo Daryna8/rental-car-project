@@ -4,10 +4,9 @@ import { fetchCarsThunk } from './operations';
 const initialState = {
   cars: {
     items: [],
-    isLoading: false,
+    lastCount: 0,
     error: null,
   },
-  filter: '',
 };
 
 const rentalSlice = createSlice({
@@ -17,14 +16,10 @@ const rentalSlice = createSlice({
     builder
       .addCase(fetchCarsThunk.fulfilled, (state, { payload }) => {
         state.cars.items = [...state.cars.items, ...payload];
-        state.loading = false;
-      })
-      .addCase(fetchCarsThunk.pending, (state) => {
-        state.loading = true;
+        state.cars.lastCount = payload.length;
       })
       .addCase(fetchCarsThunk.rejected, (state, { payload }) => {
-        state.error = payload;
-        state.loading = false;
+        state.cars.error = payload;
       });
   },
 });

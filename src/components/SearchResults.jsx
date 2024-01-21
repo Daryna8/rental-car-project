@@ -29,7 +29,6 @@ const StyledSearchResultsContainer = styled.div`
     padding: 0;
     display: flex;
     flex-wrap: wrap;
-    gap: 29px;
     justify-content: space-between;
     margin-bottom: 56px;
   }

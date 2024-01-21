@@ -1,60 +1,114 @@
-import { styled } from 'styled-components';
 import closeImg from '../img/svg/close.svg';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
+import {
+  BadgeContainer,
+  StyledBackdrop,
+  StyledCarCardModal,
+  StyledCarInfoModal,
+  StyledCarNameModal,
+  StyledCloseBtn,
+  StyledDescription,
+  StyledModalButton,
+  StyledModalImg,
+  StyledSubTitle,
+} from '../styles/styled';
 
 export const Modal = ({
-  car: { year, make, model, description, img, rentalConditions },
+  car: {
+    year,
+    make,
+    model,
+    description,
+    img,
+    rentalConditions,
+    address,
+    id,
+    type,
+    fuelConsumption,
+    engineSize,
+    accessories,
+    functionalities,
+    mileage,
+    rentalPrice,
+  },
   closeModal,
 }) => {
-  useEffect(() => {
-    const handleKeyDown = (event) => {
+  const ref = useRef();
+
+  const handleKeyDown = useCallback(
+    (event) => {
       if (event.key === 'Escape') {
         closeModal();
       }
-    };
+    },
+    [closeModal]
+  );
 
-    const handleClickOutside = (event) => {
-      if (event.target === event.currentTarget) {
+  const handleClickBackdrop = useCallback(
+    (event) => {
+      if (event.target === ref.current) {
         closeModal();
       }
-    };
+    },
+    [closeModal]
+  );
 
-    document.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('click', handleClickOutside);
-
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-      document.removeEventListener('click', handleClickOutside);
+      window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [closeModal]);
+  }, [handleKeyDown, closeModal]);
+
+  const addressParts = address.split(', ');
+  const city = addressParts[1];
+  const country = addressParts[2];
+
+  const Badge = ({ label, value }) => (
+    <BadgeContainer>
+      <span>{label} </span>
+      {value && <span>:</span>}
+      <span className="highlight">{value}</span>
+    </BadgeContainer>
+  );
 
   return (
-    <StyledBackdrop onClick={closeModal}>
+    <StyledBackdrop onClick={handleClickBackdrop} ref={ref}>
       <StyledCarCardModal>
         <StyledCloseBtn onClick={closeModal}>
           <img alt="close btn" src={closeImg}></img>
         </StyledCloseBtn>
 
         <div>
-          <Image src={img} alt="car image" />
+          <StyledModalImg src={img} alt="car image" />
           <div>
-            <StyledCarName>
+            <StyledCarNameModal>
               <div>
                 {make} <span> {model}</span>, {year}
               </div>{' '}
-            </StyledCarName>
+            </StyledCarNameModal>
             <StyledCarInfoModal>
-              Kiev | Ukraine | Luxury Car Rentals | Premium Suv | Enclave | 9582
-              | Power liftgate
+              {city} | {country} | Id: {id} | Year: {year} | Type: {type} <br />{' '}
+              Fuel Consumption: {fuelConsumption} | Engine Size: {engineSize}
             </StyledCarInfoModal>
             <StyledDescription>{description}</StyledDescription>
             <StyledSubTitle>Accessories and functionalities:</StyledSubTitle>
             <StyledCarInfoModal>
-              Leather seats | Panoramic sunroof | Power liftgate | Premium audio
-              system | Remote start | Blind-spot monitoring
+              {accessories.join(' | ')} <br />
+              {functionalities.join(' | ')}
             </StyledCarInfoModal>
             <StyledSubTitle>Rental Conditions: </StyledSubTitle>
-            <StyledConditions>{rentalConditions}</StyledConditions>
+            <div>
+              {rentalConditions?.split('\n').map((condition) => {
+                const [label, value] = condition
+                  .split(':')
+                  .map((str) => str.trim());
+
+                return <Badge key={condition} label={label} value={value} />;
+              })}
+              <Badge label="Mileage" value={mileage?.toLocaleString('en-US')} />
+              <Badge label="Price" value={`${rentalPrice.replace('$', '')}$`} />
+            </div>
             <StyledModalButton as="a" href="tel:+380730000000">
               Rental car
             </StyledModalButton>
@@ -64,113 +118,3 @@ export const Modal = ({
     </StyledBackdrop>
   );
 };
-
-const StyledBackdrop = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(18, 20, 23, 0.5);
-  backdrop-filter: blur(3px);
-  z-index: 20;
-`;
-
-const StyledCarCardModal = styled.div`
-  width: 541px;
-  height: 752px;
-  border-radius: 24px;
-  background: #fff;
-  overflow: hidden;
-  padding: 24px 73px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: 0px 4px 60px 0px rgba(0, 0, 0, 0.25);
-  z-index: 2;
-`;
-
-const StyledCloseBtn = styled.button`
-  background-color: transparent;
-  outline: none;
-  border: none;
-  cursor: pointer;
-  position: absolute;
-  top: 16px;
-  right: 16px;
-`;
-
-const Image = styled.img`
-  width: 461px;
-  height: 248px;
-  border-radius: 14px;
-  margin-top: 25px;
-  margin-bottom: 14px;
-`;
-
-const StyledCarName = styled.h2`
-  display: flex;
-  justify-content: space-between;
-  color: #121417;
-  font-size: 18px;
-  line-height: 1.5;
-  margin-bottom: 8px;
-  span {
-    padding-left: 3px;
-    color: #3470ff;
-  }
-`;
-
-const StyledCarInfoModal = styled.p`
-  /* width: 277px; */
-  color: rgba(18, 20, 23, 0.5);
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 1.5;
-  margin-bottom: 14px;
-`;
-
-const StyledDescription = styled.p`
-  color: #121417;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.4;
-  margin-bottom: 24px;
-`;
-
-const StyledSubTitle = styled.h3`
-  color: #121417;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.4;
-  margin-bottom: 8px;
-`;
-
-const StyledConditions = styled.p`
-  border-radius: 35px;
-  background: #f9f9f9;
-  margin-bottom: 24px;
-`;
-
-const StyledModalButton = styled.button`
-  display: inline-flex;
-  width: 168px;
-  height: 44px;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  border-radius: 12px;
-  background: #3470ff;
-  color: var(--White, #fff);
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1.4;
-  cursor: pointer;
-  &:hover {
-    background: #0b44cd;
-  }
-`;
