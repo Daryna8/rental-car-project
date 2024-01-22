@@ -1,21 +1,22 @@
 import { styled } from 'styled-components';
 import Select from 'react-select';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectCarBrand } from '../redux/selectors';
-import { filter } from '../redux/rentalSlice';
 
-export const SearchBar = ({ handleSearch }) => {
-  const selectedBrand = useSelector(selectCarBrand);
+export const SearchBar = ({
+  handleSearch,
+  handleBrandChange,
+  selectedBrand,
+}) => {
+  // const [fromMileage, setFromMileage] = useState('');
+  // const [toMileage, setToMileage] = useState('');
+  // const [selectedPrice, setSelectedPrice] = useState(null);
 
-  const dispatch = useDispatch();
-
-  const handleBrandChange = (selectedOption) => {
-    dispatch(filter(selectedOption));
-  };
+  // const handlePriceChange = (selectedOption) => {
+  //   setSelectedPrice(selectedOption);
+  // };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    handleSearch({ brand: selectedBrand?.value });
+    handleSearch();
   };
 
   return (

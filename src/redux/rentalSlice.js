@@ -8,12 +8,6 @@ const initialState = {
     error: null,
     favorites: [],
     currentPage: 1,
-    filter: {
-      selectedBrand: null,
-      // selectedPrice: null,
-      // selectedFromMileage: null,
-      // selectedToMileage: null,
-    },
   },
 };
 
@@ -32,9 +26,6 @@ const rentalSlice = createSlice({
     setCurrentPage: (state, { payload }) => {
       state.cars.currentPage = payload;
     },
-    filter: (state, { payload }) => {
-      state.cars.filter.selectedBrand = payload;
-    },
     clearCarItems: (state) => {
       state.cars.items = [];
     },
@@ -51,11 +42,6 @@ const rentalSlice = createSlice({
   },
 });
 
-export const {
-  addFavorites,
-  deleteFavorites,
-  setCurrentPage,
-  filter,
-  clearCarItems,
-} = rentalSlice.actions;
+export const { addFavorites, deleteFavorites, setCurrentPage, clearCarItems } =
+  rentalSlice.actions;
 export const rentalReducer = rentalSlice.reducer;

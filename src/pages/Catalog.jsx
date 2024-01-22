@@ -1,10 +1,9 @@
 import { SearchBar } from '../components/SearchBar';
 import { SearchResults } from '../components/SearchResults';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchCarsThunk } from '../redux/operations';
 import {
-  selectCarBrand,
   selectCars,
   selectCurrentPage,
   selectLastCount,
@@ -16,13 +15,13 @@ export const Catalog = () => {
   const cars = useSelector(selectCars);
   const currentPage = useSelector(selectCurrentPage);
   const lastCount = useSelector(selectLastCount);
-  const selectedBrand = useSelector(selectCarBrand);
+  const [selectedBrand, setSelectedBrand] = useState(null);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    !selectedBrand && dispatch(fetchCarsThunk({}));
-  }, [dispatch, selectedBrand]);
+    dispatch(fetchCarsThunk({}));
+  }, [dispatch]);
 
   const handleLoadMore = () => {
     const newPage = currentPage + 1;
@@ -30,16 +29,25 @@ export const Catalog = () => {
     dispatch(fetchCarsThunk({ page: newPage }));
   };
 
-  const handleSearch = (filter) => {
+  const handleBrandChange = (selectedOption) => {
+    setSelectedBrand(selectedOption);
+  };
+
+  const handleSearch = () => {
     dispatch(clearCarItems());
-    dispatch(fetchCarsThunk(filter));
+    dispatch(fetchCarsThunk({ brand: selectedBrand?.value }));
   };
 
   const isLastPage = lastCount < 12;
 
   return (
     <StyledCatalogContainer>
-      <SearchBar cars={cars} handleSearch={handleSearch} />
+      <SearchBar
+        cars={cars}
+        handleSearch={handleSearch}
+        handleBrandChange={handleBrandChange}
+        selectedBrand={selectedBrand}
+      />
       <SearchResults
         cars={cars}
         handleLoadMore={handleLoadMore}
