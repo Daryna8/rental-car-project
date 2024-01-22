@@ -20,8 +20,8 @@ export const Catalog = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchCarsThunk({}));
-  }, [dispatch]);
+    !selectedBrand && !cars.length && dispatch(fetchCarsThunk({}));
+  }, [selectedBrand, cars, dispatch]);
 
   const handleLoadMore = () => {
     const newPage = currentPage + 1;

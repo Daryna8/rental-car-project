@@ -16,7 +16,7 @@ const persistConfig = {
   key: 'rentalCars',
   version: 1,
   storage,
-  whitelist: ['favorites'],
+  whitelist: ['cars.favorites', 'favorites'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rentalReducer);

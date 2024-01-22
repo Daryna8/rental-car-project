@@ -45,6 +45,9 @@ export const StyledNavigation = styled.div`
     font-family: 'Dancing Script';
     font-size: 38px;
     padding: 15px;
+    &.active {
+      color: white;
+    }
   }
 `;
 
@@ -297,3 +300,20 @@ export const StyledModalButton = styled.button`
 `;
 
 //favorites
+export const StyledFavContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  max-width: 1500px;
+  margin: 20px 80px;
+  ul {
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 29px;
+  }
+`;
+
+export const StyledFavText = styled.p`
+  margin: 20px 80px;
+  font-size: 28px;
+`;

@@ -6,9 +6,9 @@ const initialState = {
     items: [],
     lastCount: 0,
     error: null,
-    favorites: [],
     currentPage: 1,
   },
+  favorites: [],
 };
 
 const rentalSlice = createSlice({
@@ -16,12 +16,10 @@ const rentalSlice = createSlice({
   initialState,
   reducers: {
     addFavorites: (state, { payload }) => {
-      state.cars.favorites = [...state.cars.favorites, payload];
+      state.favorites = [...state.favorites, payload];
     },
     deleteFavorites: (state, { payload }) => {
-      state.cars.favorites = state.cars.favorites.filter(
-        ({ id }) => id !== payload
-      );
+      state.favorites = state.favorites.filter(({ id }) => id !== payload);
     },
     setCurrentPage: (state, { payload }) => {
       state.cars.currentPage = payload;
