@@ -1,6 +1,7 @@
 import { Modal } from './Modal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import heartImg from '../img/svg/heart.svg';
+import blueHeartImg from '../img/svg/blueHeart.svg';
 import {
   Image,
   StyledButton,
@@ -10,6 +11,9 @@ import {
   StyledHeartBtn,
   StyledImgContainer,
 } from '../styles/styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { addFavorites, deleteFavorites } from '../redux/rentalSlice';
+import { selectFavorites } from '../redux/selectors';
 
 export const CarCard = ({ car }) => {
   const {
@@ -24,7 +28,25 @@ export const CarCard = ({ car }) => {
     functionalities,
     type,
   } = car;
+
+  const fav = useSelector(selectFavorites);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setIsFavorite(fav.some((favItem) => favItem.id === id));
+  }, [fav, id]);
+
+  const handleFavoriteClick = () => {
+    if (isFavorite) {
+      dispatch(deleteFavorites(id));
+    } else {
+      dispatch(addFavorites(car));
+    }
+  };
 
   const handleLearnMoreClick = () => {
     setIsModalOpen(true);
@@ -38,8 +60,12 @@ export const CarCard = ({ car }) => {
     <div>
       <StyledCarCard>
         <StyledImgContainer>
-          <StyledHeartBtn>
-            <img alt="heart btn" src={heartImg}></img>
+          <StyledHeartBtn onClick={handleFavoriteClick}>
+            {isFavorite ? (
+              <img alt="blue heart btn" src={blueHeartImg} />
+            ) : (
+              <img alt="heart btn" src={heartImg} />
+            )}
           </StyledHeartBtn>
           <Image src={img} alt="car image" />
         </StyledImgContainer>

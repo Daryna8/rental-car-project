@@ -8,6 +8,7 @@ export const SearchResults = ({ cars, handleLoadMore, isLastPage }) => {
         <ul>
           {cars.map((car) => (
             <CarCard key={car.id} car={car} />
+            // <CarCard key={Math.random()} car={car} /> TODO; remove
           ))}
         </ul>
       </StyledSearchResultsContainer>
@@ -31,6 +32,7 @@ const StyledSearchResultsContainer = styled.div`
     flex-wrap: wrap;
     justify-content: space-between;
     margin-bottom: 56px;
+    gap: 29px;
   }
 `;
 

@@ -1,24 +1,26 @@
-import { useState } from 'react';
 import { styled } from 'styled-components';
 import Select from 'react-select';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectCarBrand } from '../redux/selectors';
+import { filter } from '../redux/rentalSlice';
 
-export const SearchBar = () => {
-  // const [fromMileage, setFromMileage] = useState('');
-  // const [toMileage, setToMileage] = useState('');
+export const SearchBar = ({ handleSearch }) => {
+  const selectedBrand = useSelector(selectCarBrand);
 
-  const [selectedBrand, setSelectedBrand] = useState(null);
-  const [selectedPrice, setSelectedPrice] = useState(null);
+  const dispatch = useDispatch();
 
   const handleBrandChange = (selectedOption) => {
-    setSelectedBrand(selectedOption);
+    dispatch(filter(selectedOption));
   };
 
-  const handlePriceChange = (selectedOption) => {
-    setSelectedPrice(selectedOption);
+  const onSubmit = (e) => {
+    e.preventDefault();
+    handleSearch({ brand: selectedBrand?.value });
   };
+
   return (
     <StyledFormContainer>
-      <StyledForm>
+      <StyledForm onSubmit={onSubmit}>
         <StyledSelectsCont>
           <StyledSelectContainer>
             <p>Car brand</p>
@@ -41,8 +43,8 @@ export const SearchBar = () => {
             <p>Price/ 1 hour</p>
             <Select
               placeholder="To $"
-              value={selectedPrice}
-              onChange={handlePriceChange}
+              // value={selectedPrice}
+              // onChange={handlePriceChange}
               width={125}
               styles={customStyles}
               components={{
