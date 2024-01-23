@@ -85,6 +85,118 @@ export const StyledCatalogContainer = styled.div`
   margin: 50px 115px;
 `;
 
+//searchbar
+export const StyledFormContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+export const StyledForm = styled.form`
+  display: flex;
+  justify-content: space-between;
+  width: 859px;
+  margin-bottom: 50px;
+  @media only screen and (max-width: 880px) {
+    max-width: 600px;
+  }
+`;
+
+export const StyledSelectsCont = styled.div`
+  display: flex;
+  gap: 18px;
+`;
+
+export const StyledSelectContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  p {
+    color: #8a8a89;
+    font-size: 14px;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+`;
+
+export const StyledTextField = styled.div`
+  display: flex;
+  input {
+    width: 160px;
+    height: 48px;
+    border: none;
+    background: #f7f7fb;
+    padding-left: 24px;
+    @media only screen and (max-width: 880px) {
+      max-width: 120px;
+    }
+
+    &:first-child {
+      border-radius: 14px 0 0 14px;
+      border-right: 1px solid rgba(138, 138, 137, 0.2);
+    }
+
+    &:last-child {
+      border-radius: 0 14px 14px 0;
+    }
+
+    &::placeholder {
+      color: #121417;
+      font-size: 18px;
+      line-height: 1.1;
+    }
+  }
+`;
+
+export const StyledFormBtn = styled.button`
+  width: 136px;
+  height: 48px;
+  border: none;
+  border-radius: 12px;
+  background: ${({ disabled }) => (disabled ? '#ccc' : '#3470ff')};
+  color: ${({ disabled }) =>
+    disabled ? 'var(--Grey, #666)' : 'var(--White, #fff)'};
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-top: 25px;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+
+  &:hover {
+    background: ${({ disabled }) => (disabled ? '#ccc' : '#0b44cd')};
+  }
+`;
+
+//searchresults
+export const StyledSearchResultsContainer = styled.div`
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  ul {
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 56px;
+    gap: 29px;
+  }
+`;
+
+export const StyledBtnRes = styled.button`
+  display: flex;
+  margin: 0 auto;
+  cursor: pointer;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  color: #3470ff;
+  font-size: 16px;
+  line-height: 1.5;
+  text-decoration-line: underline;
+  &:hover {
+    color: #0b44cd;
+  }
+`;
+
 //car card
 export const StyledCarCard = styled.li`
   display: flex;
@@ -303,7 +415,7 @@ export const StyledFavContainer = styled.div`
 
 export const StyledFavText = styled.p`
   margin: 20px 80px;
-  font-size: 28px;
+  font-size: 22px;
 `;
 
 export const StyledFavTitle = styled.h2`
