@@ -54,11 +54,11 @@ export const Catalog = () => {
 
   const disableLoadMore = lastCount < 12 || selectedPrice;
 
-  // this should be done on backend =)
+  // this should be done on backend but mockapi does not support range filter
   if (selectedPrice !== null) {
     cars = cars.filter((car) => {
       const carPrice = Number(car.rentalPrice.replace('$', ''));
-      return carPrice < selectedPrice?.value;
+      return carPrice <= selectedPrice?.value;
     });
   }
 
