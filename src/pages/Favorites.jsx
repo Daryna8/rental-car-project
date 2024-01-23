@@ -1,7 +1,11 @@
 import { useSelector } from 'react-redux';
 import { selectFavorites } from '../redux/selectors';
 import { CarCard } from '../components/CarCard';
-import { StyledFavContainer, StyledFavText } from '../styles/styled';
+import {
+  StyledFavContainer,
+  StyledFavText,
+  StyledFavTitle,
+} from '../styles/styled';
 
 export const Favorites = () => {
   const fav = useSelector(selectFavorites);
@@ -14,7 +18,10 @@ export const Favorites = () => {
         </StyledFavText>
       ) : (
         <StyledFavContainer>
-          <StyledFavText> Check your favorites: </StyledFavText>
+          <StyledFavTitle>
+            {' '}
+            Top Picks: Your Preferred Rides with AutoVista{' '}
+          </StyledFavTitle>
           <ul>
             {fav.map((car) => (
               <CarCard key={car.id} car={car} />

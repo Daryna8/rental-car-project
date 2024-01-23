@@ -67,29 +67,16 @@ export const StyledHomeContainer = styled.div`
   padding: 40px;
 `;
 
-export const StyledMainTitle = styled.h1`
-  max-width: 1000px;
-  margin: 0 auto;
-  color: #1256aa;
-  font-family: 'Dancing Script';
-  font-size: 98px;
-  font-weight: 400;
-  line-height: 1.5;
-
-  @media only screen and (min-width: 480px) and (max-width: 1399px) {
-    font-size: 48px;
-    margin-top: 40px;
-  }
-`;
-
 export const StyledMainInfo = styled.p`
-  margin: 0 240px;
+  width: 900px;
+  margin: 80px auto;
   font-size: 32px;
   font-weight: 400;
-  line-height: 1.5;
-  @media only screen and (min-width: 480px) and (max-width: 1399px) {
-    font-size: 18px;
-    margin: 20px 160px;
+  text-align: center;
+  span {
+    color: #1256aa;
+    font-family: 'Dancing Script';
+    font-size: 58px;
   }
 `;
 
@@ -217,6 +204,7 @@ export const StyledModalImg = styled.img`
   border-radius: 14px;
   margin-top: 25px;
   margin-bottom: 14px;
+  object-fit: cover;
 `;
 
 export const StyledCarNameModal = styled.h2`
@@ -304,7 +292,7 @@ export const StyledFavContainer = styled.div`
   display: flex;
   flex-direction: column;
   max-width: 1500px;
-  margin: 20px 80px;
+  margin: 30px 80px;
   ul {
     padding: 0;
     display: flex;
@@ -316,4 +304,11 @@ export const StyledFavContainer = styled.div`
 export const StyledFavText = styled.p`
   margin: 20px 80px;
   font-size: 28px;
+`;
+
+export const StyledFavTitle = styled.h2`
+  font-size: 22px;
+  margin-bottom: 30px;
+  margin-left: 65px;
+  color: #8a8a89;
 `;

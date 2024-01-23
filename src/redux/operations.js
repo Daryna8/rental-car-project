@@ -6,7 +6,6 @@ api.defaults.baseURL = 'https://65aacfe9081bd82e1d97d23d.mockapi.io/';
 export const fetchCarsThunk = createAsyncThunk(
   'cars',
   async (filter, thunkAPI) => {
-    console.log(filter);
     const { page = 1, pageSize = 12, brand } = filter;
     try {
       const { data } = await api.get('cars', {
