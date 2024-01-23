@@ -5,14 +5,11 @@ export const SearchBar = ({
   handleSearch,
   handleBrandChange,
   selectedBrand,
+  handlePriceChange,
+  selectedPrice,
 }) => {
   // const [fromMileage, setFromMileage] = useState('');
   // const [toMileage, setToMileage] = useState('');
-  // const [selectedPrice, setSelectedPrice] = useState(null);
-
-  // const handlePriceChange = (selectedOption) => {
-  //   setSelectedPrice(selectedOption);
-  // };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -44,8 +41,8 @@ export const SearchBar = ({
             <p>Price/ 1 hour</p>
             <Select
               placeholder="To $"
-              // value={selectedPrice}
-              // onChange={handlePriceChange}
+              value={selectedPrice}
+              onChange={handlePriceChange}
               width={125}
               styles={customStyles}
               components={{
@@ -65,7 +62,12 @@ export const SearchBar = ({
             </StyledTextField>
           </StyledSelectContainer>
         </StyledSelectsCont>
-        <StyledFormBtn type="submit">Search</StyledFormBtn>
+        <StyledFormBtn
+          type="submit"
+          disabled={!selectedPrice && !selectedBrand}
+        >
+          Search
+        </StyledFormBtn>
       </StyledForm>
     </StyledFormContainer>
   );
@@ -195,14 +197,16 @@ const StyledFormBtn = styled.button`
   height: 48px;
   border: none;
   border-radius: 12px;
-  background: #3470ff;
-  color: var(--White, #fff);
+  background: ${({ disabled }) => (disabled ? '#ccc' : '#3470ff')};
+  color: ${({ disabled }) =>
+    disabled ? 'var(--Grey, #666)' : 'var(--White, #fff)'};
   font-size: 14px;
   font-weight: 600;
   line-height: 1.4;
   margin-top: 25px;
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+
   &:hover {
-    background: #0b44cd;
+    background: ${({ disabled }) => (disabled ? '#ccc' : '#0b44cd')};
   }
 `;

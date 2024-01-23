@@ -1,18 +1,28 @@
 import { styled } from 'styled-components';
 import { CarCard } from './CarCard';
 
-export const SearchResults = ({ cars, handleLoadMore, isLastPage }) => {
+export const SearchResults = ({
+  cars,
+  handleLoadMore,
+  disableLoadMore,
+  loading,
+}) => {
   return (
     <div>
       <StyledSearchResultsContainer>
-        <ul>
-          {cars.map((car) => (
-            <CarCard key={car.id} car={car} />
-            // <CarCard key={Math.random()} car={car} /> TODO; remove
-          ))}
-        </ul>
+        {loading ? (
+          <b>loading...</b>
+        ) : (
+          <ul>
+            {cars?.length ? (
+              cars.map((car) => <CarCard key={car.id} car={car} />)
+            ) : (
+              <div>No cars found</div>
+            )}
+          </ul>
+        )}
       </StyledSearchResultsContainer>
-      {!isLastPage && (
+      {!disableLoadMore && (
         <StyledBtn type="button" onClick={handleLoadMore}>
           Load more
         </StyledBtn>

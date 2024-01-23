@@ -7,6 +7,7 @@ const initialState = {
     lastCount: 0,
     error: null,
     currentPage: 1,
+    loading: false,
   },
   favorites: [],
 };
@@ -33,9 +34,14 @@ const rentalSlice = createSlice({
       .addCase(fetchCarsThunk.fulfilled, (state, { payload }) => {
         state.cars.items = [...state.cars.items, ...payload];
         state.cars.lastCount = payload.length;
+        state.cars.loading = false;
+      })
+      .addCase(fetchCarsThunk.pending, (state) => {
+        state.cars.loading = true;
       })
       .addCase(fetchCarsThunk.rejected, (state, { payload }) => {
         state.cars.error = payload;
+        state.cars.loading = false;
       });
   },
 });

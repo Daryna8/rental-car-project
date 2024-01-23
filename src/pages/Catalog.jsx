@@ -7,21 +7,27 @@ import {
   selectCars,
   selectCurrentPage,
   selectLastCount,
+  selectLoading,
 } from '../redux/selectors';
 import { StyledCatalogContainer } from '../styles/styled';
 import { clearCarItems, setCurrentPage } from '../redux/rentalSlice';
 
 export const Catalog = () => {
-  const cars = useSelector(selectCars);
+  let cars = useSelector(selectCars);
   const currentPage = useSelector(selectCurrentPage);
   const lastCount = useSelector(selectLastCount);
+  const loading = useSelector(selectLoading);
+
   const [selectedBrand, setSelectedBrand] = useState(null);
+  const [selectedPrice, setSelectedPrice] = useState(null);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    !selectedBrand && !cars.length && dispatch(fetchCarsThunk({}));
-  }, [selectedBrand, cars, dispatch]);
+    !(selectedBrand || selectedPrice) &&
+      !cars.length &&
+      dispatch(fetchCarsThunk({}));
+  }, [selectedBrand, selectedPrice, cars, dispatch]);
 
   const handleLoadMore = () => {
     const newPage = currentPage + 1;
@@ -33,12 +39,28 @@ export const Catalog = () => {
     setSelectedBrand(selectedOption);
   };
 
-  const handleSearch = () => {
-    dispatch(clearCarItems());
-    dispatch(fetchCarsThunk({ brand: selectedBrand?.value }));
+  const handlePriceChange = (selectedOption) => {
+    setSelectedPrice(selectedOption);
   };
 
-  const isLastPage = lastCount < 12;
+  const handleSearch = () => {
+    dispatch(clearCarItems());
+    if (selectedPrice !== null) {
+      dispatch(fetchCarsThunk({ pageSize: 100, brand: selectedBrand?.value }));
+    } else {
+      dispatch(fetchCarsThunk({ brand: selectedBrand?.value }));
+    }
+  };
+
+  const disableLoadMore = lastCount < 12 || selectedPrice;
+
+  // this should be done on backend =)
+  if (selectedPrice !== null) {
+    cars = cars.filter((car) => {
+      const carPrice = Number(car.rentalPrice.replace('$', ''));
+      return carPrice < selectedPrice?.value;
+    });
+  }
 
   return (
     <StyledCatalogContainer>
@@ -47,11 +69,14 @@ export const Catalog = () => {
         handleSearch={handleSearch}
         handleBrandChange={handleBrandChange}
         selectedBrand={selectedBrand}
+        handlePriceChange={handlePriceChange}
+        selectedPrice={selectedPrice}
       />
       <SearchResults
         cars={cars}
         handleLoadMore={handleLoadMore}
-        isLastPage={isLastPage}
+        disableLoadMore={disableLoadMore}
+        loading={loading}
       />
     </StyledCatalogContainer>
   );
