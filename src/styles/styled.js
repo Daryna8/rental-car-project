@@ -347,6 +347,13 @@ export const StyledDescription = styled.p`
   font-weight: 400;
   line-height: 1.4;
   margin-bottom: 24px;
+  max-height: 36px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: auto;
 `;
 
 export const StyledSubTitle = styled.h3`
