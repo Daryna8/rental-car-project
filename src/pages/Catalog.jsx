@@ -20,14 +20,16 @@ export const Catalog = () => {
 
   const [selectedBrand, setSelectedBrand] = useState(null);
   const [selectedPrice, setSelectedPrice] = useState(null);
+  const [fromMileage, setFromMileage] = useState('');
+  const [toMileage, setToMileage] = useState('');
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    !(selectedBrand || selectedPrice) &&
+    !(selectedBrand || selectedPrice || fromMileage || toMileage) &&
       !cars.length &&
       dispatch(fetchCarsThunk({}));
-  }, [selectedBrand, selectedPrice, cars, dispatch]);
+  }, [selectedBrand, selectedPrice, fromMileage, toMileage, cars, dispatch]);
 
   const handleLoadMore = () => {
     const newPage = currentPage + 1;
@@ -35,31 +37,29 @@ export const Catalog = () => {
     dispatch(fetchCarsThunk({ page: newPage }));
   };
 
-  const handleBrandChange = (selectedOption) => {
-    setSelectedBrand(selectedOption);
-  };
-
-  const handlePriceChange = (selectedOption) => {
-    setSelectedPrice(selectedOption);
-  };
-
   const handleSearch = () => {
     dispatch(clearCarItems());
-    if (selectedPrice !== null) {
+    if (!!selectedPrice || !!fromMileage || !!toMileage) {
       dispatch(fetchCarsThunk({ pageSize: 100, brand: selectedBrand?.value }));
     } else {
       dispatch(fetchCarsThunk({ brand: selectedBrand?.value }));
     }
   };
 
-  const disableLoadMore = lastCount < 12 || selectedPrice;
+  const disableLoadMore =
+    lastCount < 12 || selectedPrice || fromMileage || toMileage;
 
   // this should be done on backend but mockapi does not support range filter
-  if (selectedPrice !== null) {
-    cars = cars.filter((car) => {
-      const carPrice = Number(car.rentalPrice.replace('$', ''));
-      return carPrice <= selectedPrice?.value;
-    });
+  if (!!selectedPrice) {
+    cars = cars.filter(
+      (car) => Number(car.rentalPrice.replace('$', '')) <= selectedPrice?.value
+    );
+  }
+  if (!!fromMileage) {
+    cars = cars.filter((car) => car.mileage >= fromMileage);
+  }
+  if (!!toMileage) {
+    cars = cars.filter((car) => car.mileage <= toMileage);
   }
 
   return (
@@ -67,10 +67,14 @@ export const Catalog = () => {
       <SearchBar
         cars={cars}
         handleSearch={handleSearch}
-        handleBrandChange={handleBrandChange}
         selectedBrand={selectedBrand}
-        handlePriceChange={handlePriceChange}
         selectedPrice={selectedPrice}
+        fromMileage={fromMileage}
+        toMileage={toMileage}
+        handleBrandChange={(selectedOption) => setSelectedBrand(selectedOption)}
+        handlePriceChange={(selectedOption) => setSelectedPrice(selectedOption)}
+        handleFromMileageChange={(e) => setFromMileage(e.target.value)}
+        handleToMileageChange={(e) => setToMileage(e.target.value)}
       />
       <SearchResults
         cars={cars}

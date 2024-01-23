@@ -120,6 +120,7 @@ export const StyledSelectContainer = styled.div`
 export const StyledTextField = styled.div`
   display: flex;
   input {
+    font-weight: 500;
     width: 160px;
     height: 48px;
     border: none;

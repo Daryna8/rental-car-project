@@ -10,14 +10,15 @@ import {
 
 export const SearchBar = ({
   handleSearch,
-  handleBrandChange,
   selectedBrand,
-  handlePriceChange,
   selectedPrice,
+  fromMileage,
+  toMileage,
+  handleBrandChange,
+  handlePriceChange,
+  handleToMileageChange,
+  handleFromMileageChange,
 }) => {
-  // const [fromMileage, setFromMileage] = useState('');
-  // const [toMileage, setToMileage] = useState('');
-
   const onSubmit = (e) => {
     e.preventDefault();
     handleSearch();
@@ -64,14 +65,26 @@ export const SearchBar = ({
           <StyledSelectContainer>
             <p>Сar mileage / km</p>
             <StyledTextField>
-              <input id="from" placeholder="From" />
-              <input id="to" placeholder="To" />
+              <input
+                id="from"
+                value={fromMileage}
+                onChange={handleFromMileageChange}
+                placeholder="From"
+              />
+              <input
+                id="to"
+                value={toMileage}
+                onChange={handleToMileageChange}
+                placeholder="To"
+              />
             </StyledTextField>
           </StyledSelectContainer>
         </StyledSelectsCont>
         <StyledFormBtn
           type="submit"
-          disabled={!selectedPrice && !selectedBrand}
+          disabled={
+            !(selectedPrice || selectedBrand || fromMileage || toMileage)
+          }
         >
           Search
         </StyledFormBtn>
