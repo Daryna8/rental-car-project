@@ -359,6 +359,13 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   font-weight: 400;
   line-height: 1.4;
   margin-bottom: 24px;
+  max-height: 36px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: auto;
 `,ch=V.h3`
   color: #121417;
   font-size: 14px;
