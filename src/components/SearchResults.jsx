@@ -10,7 +10,7 @@ export const SearchResults = ({
   return (
     <div>
       <StyledSearchResultsContainer>
-        {loading ? (
+        {loading && !cars?.length ? (
           <b>loading...</b>
         ) : (
           <ul>
